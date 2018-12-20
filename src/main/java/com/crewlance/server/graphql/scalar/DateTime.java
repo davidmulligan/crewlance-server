@@ -5,9 +5,9 @@ import graphql.schema.Coercing;
 import graphql.schema.CoercingParseValueException;
 import graphql.schema.CoercingSerializeException;
 import graphql.schema.GraphQLScalarType;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import javax.inject.Named;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +15,7 @@ import java.time.format.DateTimeParseException;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
-@Named
+@Component
 public class DateTime extends GraphQLScalarType {
 
     private static final String DEFAULT_NAME = "DateTime";

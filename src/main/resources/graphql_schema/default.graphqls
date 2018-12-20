@@ -14,6 +14,8 @@ type Mutation {
     createProject(title: String!, description: String!, location: String!, start: DateTime!, end: DateTime!): Project!
     updateProject(id: ID!, title: String, description: String, location: String, start: DateTime, end: DateTime): Project!
     deleteProject(id: ID!): String!
+    addKeywordToProject(id: ID!, keyword: String!, notes: String) : Project!
+
     scheduleProject(id: ID!): Project
 }
 

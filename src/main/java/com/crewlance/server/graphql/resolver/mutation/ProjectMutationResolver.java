@@ -2,6 +2,7 @@ package com.crewlance.server.graphql.resolver.mutation;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.crewlance.server.model.Project;
+import com.crewlance.server.model.ProjectKeyword;
 import com.crewlance.server.service.ProjectService;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,6 @@ public class ProjectMutationResolver implements GraphQLMutationResolver {
     public Project updateProject(@NonNull String id, Optional<String> title, Optional<String> description,
                                  Optional<String> location, Optional<LocalDateTime> start, Optional<LocalDateTime> end) {
         Project project = projectService.findById(id);
-
         project.setTitle(title.orElse(project.getTitle()));
         project.setDescription(description.orElse(project.getDescription()));
         project.setLocation(location.orElse(project.getLocation()));
@@ -35,10 +35,14 @@ public class ProjectMutationResolver implements GraphQLMutationResolver {
         return projectService.update(project);
     }
 
-    public Project scheduleProject(@NonNull String id) {
+    public Project addKeywordToProject(@NonNull String id, @NonNull String keyword, String notes) {
         Project project = projectService.findById(id);
+        project.getKeywords().add(new ProjectKeyword(project, keyword, notes));
+        return projectService.update(project);
+    }
 
-        return projectService.schedule(project);
+    public Project scheduleProject(@NonNull String id) {
+        return projectService.schedule(projectService.findById(id));
     }
 
     public String deleteProject(@NonNull String id) {

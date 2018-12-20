@@ -15,6 +15,9 @@ VALUES ('111111', 'Project1', 'Project One', 'London', now(), now(), 'NEW', '1',
 INSERT INTO crewlance.project_keyword (id, project_id, value, notes, auto_generated, created_by, created_on, modified_by, modified_on)
 VALUES ('111111', '111111', 'Madonna', 'Notes', 0, '1', now(), '1', now());
 
+INSERT INTO crewlance.availability (id, user_id, start, end, notes, created_by, created_on, modified_by, modified_on)
+VALUES ('111111', '111111', now(), now(), 'Notes', '1', now(), '1', now());
+
 INSERT INTO crewlance.preference (id, user_id, type, notes, created_by, created_on, modified_by, modified_on)
 VALUES ('111111', '111111', 'KEYWORD', 'Notes', '1', now(), '1', now()),
        ('222222', '555555', 'WORK_WITH', 'Notes', '1', now(), '1', now()),

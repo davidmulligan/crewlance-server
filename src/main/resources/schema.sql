@@ -1,6 +1,7 @@
 drop table if exists preference_keyword;
 drop table if exists preference_user;
 drop table if exists preference;
+drop table if exists availability;
 drop table if exists allocation;
 drop table if exists project_keyword;
 drop table if exists project;
@@ -56,6 +57,19 @@ create table allocation
 	start datetime not null,
 	end datetime not null,
 	strength double not null,
+	created_by varchar(32) not null,
+	created_on datetime not null,
+	modified_by varchar(32) not null,
+	modified_on datetime not null
+);
+
+create table availability
+(
+	id varchar(32) not null primary key,
+	user_id varchar(32) not null,
+	start datetime not null,
+	end datetime not null,
+	notes varchar(250),
 	created_by varchar(32) not null,
 	created_on datetime not null,
 	modified_by varchar(32) not null,

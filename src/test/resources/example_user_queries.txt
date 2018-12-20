@@ -1,0 +1,35 @@
+— LIST USERS
+{
+  users {
+    id
+    firstName
+    lastName
+    email
+    telephone1
+    telephone2
+    availability {
+      id
+      start
+      end
+      notes
+    }
+    preferences {
+      id
+      type
+      notes
+      keywords {
+        id
+        value
+        notes
+      }
+      friends {
+        id
+        user {
+          id
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+— LIST PROJECTS
+{
+  projects {
+    id
+    title
+    description
+    location
+    start
+    end
+    status
+    keywords {
+      id
+      value
+      notes
+    }
+    allocations {
+      start
+      end
+      strength
+      user {
+        firstName
+        lastName
+        email
+      }
+    }
+  }
+}
+
+— ADD PROJECT KEYWORD
+mutation {
+  addKeywordToProject(id: "111111", keyword: "Hello", notes: "Some Notes") {
+    id
+    title
+    description
+    location
+    start
+    end
+    status
+    keywords {
+      id
+      value
+      notes
+    }
+  }
+}

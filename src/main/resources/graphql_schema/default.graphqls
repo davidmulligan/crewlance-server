@@ -27,7 +27,15 @@ type User {
     email: String!
     telephone1: String!
     telephone2: String
+    availability: [Availability!]
     preferences: [Preference!]
+}
+
+type Availability {
+    id: ID!
+    start: DateTime!
+    end: DateTime!
+    notes: String
 }
 
 type Preference {

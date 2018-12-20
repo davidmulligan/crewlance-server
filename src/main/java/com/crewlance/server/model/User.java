@@ -36,6 +36,9 @@ public class User extends DomainObject {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Preference> preferences;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    private Set<Availability> availability;
+
     public User() {
     }
 
@@ -50,5 +53,9 @@ public class User extends DomainObject {
     @Transient
     public String getFullName() {
         return String.format("%s %s", firstName, lastName);
+    }
+
+    public boolean isAvailabilitySet() {
+        return !availability.isEmpty();
     }
 }

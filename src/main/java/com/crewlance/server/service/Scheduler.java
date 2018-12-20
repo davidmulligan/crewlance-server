@@ -2,14 +2,18 @@ package com.crewlance.server.service;
 
 import com.crewlance.server.model.Allocation;
 import com.crewlance.server.model.Project;
+import com.crewlance.server.model.ProjectKeyword;
 import com.crewlance.server.model.User;
-import com.crewlance.server.model.enums.PreferenceType;
 import lombok.NonNull;
+import org.jooq.lambda.Seq;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Set;
 
+import static com.crewlance.server.model.enums.PreferenceType.*;
 import static org.jooq.lambda.Seq.seq;
 
 @Component
@@ -21,39 +25,35 @@ public class Scheduler {
         this.userService = userService;
     }
 
-    public Project scheduleProject(@NonNull Project project) {
+    public void scheduleProject(@NonNull Project project) {
+        List<User> users = userService.findAll();
+        Set<User> keywordUsers = filterKeywords(seq(users), project.getKeywords());
+        Set<User> worksWithUsers = filterWorksWith(seq(users), keywordUsers);
+        List<Allocation> allocations = generateAllocations(project, Arrays.asList(keywordUsers, worksWithUsers));
+        project.getAllocations().addAll(allocations);
+    }
 
-        List<User> keywordUsers = seq(userService.findAll())
-                .filter(user -> seq(user.getPreferences())
-                        .anyMatch(preference -> preference.getType().equals(PreferenceType.KEYWORD)
-                                && seq(preference.getKeywords())
-                                .map(preferenceKeyword -> preferenceKeyword.getValue())
-                                .anyMatch(seq(project.getKeywords())
-                                        .map(projectKeyword -> projectKeyword.getValue())
-                                        .toList()::contains)))
-                .toList();
+    private static Set<User> filterKeywords(Seq<User> users, Set<ProjectKeyword> keywords) {
+        return users
+                .filter(user -> seq(user.getPreferences()).anyMatch(preference -> preference.getType().equals(KEYWORD)))
+                .filter(user -> seq(user.getPreferences()).anyMatch(preference -> seq(preference.getKeywords())
+                        .map(preferenceKeyword -> preferenceKeyword.getValue())
+                        .anyMatch(seq(keywords).map(projectKeyword -> projectKeyword.getValue()).toList()::contains)))
+                .toSet();
+    }
 
-        List<User> worksWithUsers = seq(userService.findAll())
-                .filter(user -> seq(user.getPreferences())
-                        .anyMatch(preference -> preference.getType().equals(PreferenceType.WORK_WITH)
-                                && seq(preference.getFriends()).anyMatch(keywordUsers::contains)))
-                .toList();
+    private static Set<User> filterWorksWith(Seq<User> users, Set<User> allocatedUsers) {
+        return users
+                .filter(user -> seq(user.getPreferences()).anyMatch(preference -> preference.getType().equals(WORK_WITH)))
+                .filter(user -> seq(user.getPreferences()).anyMatch(preference -> seq(preference.getFriends()).anyMatch(allocatedUsers::contains)))
+                .toSet();
+    }
 
-        Stream.concat(seq(keywordUsers), seq(worksWithUsers))
+    private static List<Allocation> generateAllocations(Project project, List<Set<User>> dataset) {
+        List<User> users = seq(dataset).flatMap(itm -> itm.stream()).toList();
+        return seq(users)
                 .distinct()
-                .forEach(user -> {
-                    double count = 0;
-                    if (keywordUsers.contains(user)) {
-                        count = count + 1;
-                    }
-                    if (worksWithUsers.contains(user)) {
-                        count = count + 1;
-                    }
-                    double strength = count / 2d * 100;
-                    project.getAllocations().add(new Allocation(user, project, project.getStart(), project.getEnd(), strength));
-
-                });
-
-        return project;
+                .map(user -> new Allocation(user, project, project.getStart(), project.getEnd(), (Collections.frequency(users, user) / (double) dataset.size() * 100)))
+                .toList();
     }
 }

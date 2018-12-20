@@ -37,7 +37,8 @@ public class ProjectService extends BaseService {
 
     @Transactional
     public Project schedule(final Project project) {
-        return projectRepository.save(scheduler.scheduleProject(project));
+        scheduler.scheduleProject(project);
+        return projectRepository.save(project);
     }
 
     @Transactional

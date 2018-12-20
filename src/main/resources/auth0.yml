@@ -1,0 +1,10 @@
+com.auth0.domain: crewlance.eu.auth0.com
+com.auth0.clientId: yP6MnC8C1xnypZYzGWDL0Huqdudzlyll
+com.auth0.clientSecret: a8rQRkq0jw-rvqXUxRTOGBFXLN6fOLO8Da32qyMkQxSncxtH6u_WrEEoSOk-oOhG
+
+auth0.allowed.origins: *
+auth0.allowed.methods: POST,GET
+auth0.allow.credentials: true
+auth0.allowed.headers: Authorization,Content-Type
+
+spring.security.enable.debug: true

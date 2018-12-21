@@ -1,9 +1,10 @@
-package com.crewlance.server.service;
+package com.crewlance.server.scheduler;
 
 import com.crewlance.server.model.Allocation;
 import com.crewlance.server.model.Project;
 import com.crewlance.server.model.ProjectKeyword;
 import com.crewlance.server.model.User;
+import com.crewlance.server.service.UserService;
 import lombok.NonNull;
 import org.jooq.lambda.Seq;
 import org.springframework.stereotype.Component;
@@ -17,11 +18,11 @@ import static com.crewlance.server.model.enums.PreferenceType.*;
 import static org.jooq.lambda.Seq.seq;
 
 @Component
-public class Scheduler {
+public class ProjectScheduler {
 
     private final UserService userService;
 
-    public Scheduler(UserService userService) {
+    public ProjectScheduler(UserService userService) {
         this.userService = userService;
     }
 

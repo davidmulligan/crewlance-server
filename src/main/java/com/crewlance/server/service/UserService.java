@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.crewlance.server.model.QUser.user;
+
 @Service
 public class UserService extends BaseService {
 
@@ -35,7 +37,7 @@ public class UserService extends BaseService {
     }
 
     public List<User> findAll() {
-        return Seq.seq(userRepository.findAll()).toList();
+        return Seq.seq(userRepository.findAll(user.lastName.asc(), user.firstName.asc())).toList();
     }
 
     public User findById(String id) {

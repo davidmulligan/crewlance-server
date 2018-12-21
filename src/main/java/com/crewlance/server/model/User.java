@@ -6,7 +6,6 @@ import lombok.Setter;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import java.util.Set;
@@ -33,10 +32,10 @@ public class User extends DomainObject {
     @Column(length = 20)
     private String telephone2;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Preference> preferences;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Availability> availability;
 
     public User() {

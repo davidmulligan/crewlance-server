@@ -3,11 +3,11 @@ package com.crewlance.server.graphql.resolver.query;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.crewlance.server.model.User;
 import com.crewlance.server.service.UserService;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Service
+@Component
 public class UserQueryResolver implements GraphQLQueryResolver {
 
     private final UserService userService;
@@ -16,7 +16,7 @@ public class UserQueryResolver implements GraphQLQueryResolver {
         this.userService = userService;
     }
 
-    public List<User> users() {
+    public List<User> findAllUsers() {
         return userService.findAll();
     }
 }

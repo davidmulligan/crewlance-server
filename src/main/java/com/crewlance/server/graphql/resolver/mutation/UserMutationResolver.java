@@ -4,11 +4,11 @@ import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.crewlance.server.model.User;
 import com.crewlance.server.service.UserService;
 import lombok.NonNull;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Service
+@Component
 public class UserMutationResolver implements GraphQLMutationResolver {
 
     private final UserService userService;

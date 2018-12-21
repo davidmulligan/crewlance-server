@@ -1,0 +1,54 @@
+extend type Query {
+    findAllUsers: [User!]
+}
+
+extend type Mutation {
+    createUser(firstName: String!, lastName: String!, email: String!, telephone1: String!, telephone2: String): User!
+    updateUser(id: ID!, firstName: String, lastName: String, email: String, telephone1: String, telephone2: String): User!
+    deleteUser(id: ID!): String!
+}
+
+type User {
+    id: ID!
+    fullName: String!
+    firstName: String!
+    lastName: String!
+    email: String!
+    telephone1: String!
+    telephone2: String
+    availability: [Availability!]
+    preferences: [Preference!]
+}
+
+type Availability {
+    id: ID!
+    start: DateTime!
+    end: DateTime!
+    notes: String
+}
+
+type Preference {
+    id: ID!
+    type: PreferenceType!
+    notes: String
+    keywords: [PreferenceKeyword!]
+    friends: [PreferenceUser!]
+}
+
+type PreferenceKeyword {
+    id: ID!
+    value: String!
+    notes: String
+}
+
+type PreferenceUser {
+    id: ID!
+    user: User!
+    notes: String
+}
+
+enum PreferenceType {
+    WORK_WITH
+    WORK_ON
+    KEYWORD
+}

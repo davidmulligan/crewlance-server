@@ -9,7 +9,9 @@ import graphql.GraphQLError;
 import graphql.servlet.GraphQLErrorHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 
+import javax.servlet.Filter;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -46,5 +48,10 @@ public class GraphQLConfig {
                 return !(error instanceof ExceptionWhileDataFetching || error instanceof Throwable);
             }
         };
+    }
+
+    @Bean
+    public Filter OpenFilter() {
+        return new OpenEntityManagerInViewFilter();
     }
 }

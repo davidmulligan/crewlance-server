@@ -14,7 +14,7 @@ spring:
     initialization-mode: always
 
   jpa:
-    show-sql: false
+    show-sql: true
     generate-ddl: false
 
     hibernate:

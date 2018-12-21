@@ -5,12 +5,12 @@ import com.crewlance.server.model.Project;
 import com.crewlance.server.model.ProjectKeyword;
 import com.crewlance.server.service.ProjectService;
 import lombok.NonNull;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-@Service
+@Component
 public class ProjectMutationResolver implements GraphQLMutationResolver {
 
     private final ProjectService projectService;

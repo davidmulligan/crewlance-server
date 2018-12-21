@@ -11,7 +11,6 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -44,10 +43,10 @@ public class Project extends DomainObject {
     @Column(nullable = false)
     private ProjectStatus status;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<ProjectKeyword> keywords;
 
-    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Allocation> allocations;
 
     public Project() {

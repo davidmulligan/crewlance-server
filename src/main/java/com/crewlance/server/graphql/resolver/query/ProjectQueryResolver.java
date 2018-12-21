@@ -3,11 +3,11 @@ package com.crewlance.server.graphql.resolver.query;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.crewlance.server.model.Project;
 import com.crewlance.server.service.ProjectService;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Service
+@Component
 public class ProjectQueryResolver implements GraphQLQueryResolver {
 
     private final ProjectService projectService;
@@ -16,7 +16,7 @@ public class ProjectQueryResolver implements GraphQLQueryResolver {
         this.projectService = projectService;
     }
 
-    public List<Project> projects() {
+    public List<Project> findAllProjects() {
         return projectService.findAll();
     }
 }

@@ -14,7 +14,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static com.crewlance.server.model.enums.PreferenceType.*;
+import static com.crewlance.server.model.enums.PreferenceType.KEYWORD;
+import static com.crewlance.server.model.enums.PreferenceType.WORK_WITH;
 import static org.jooq.lambda.Seq.seq;
 
 @Component

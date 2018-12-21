@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.1.1.RELEASE'
+        springBootVersion = '2.0.3.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -10,6 +10,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.19"
     }
 }
@@ -18,7 +19,7 @@ apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'groovy'
-apply plugin: "net.ltgt.apt"
+apply plugin: 'net.ltgt.apt'
 apply plugin: 'net.ltgt.apt-idea'
 apply plugin: 'idea'
 
@@ -39,21 +40,24 @@ bootRun {
 }
 
 dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-actuator')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-    implementation('com.graphql-java-kickstart:graphql-spring-boot-starter:5.4')
-    implementation('com.graphql-java-kickstart:graphql-java-tools:5.4.1')
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation('com.auth0:auth0-spring-security-api:1.1.0')
     implementation('com.auth0:mvc-auth-commons:1.0.2')
+    implementation('com.graphql-java-kickstart:graphql-spring-boot-starter:5.0.4')
+    implementation('com.graphql-java-kickstart:graphql-java-tools:5.4.1')
     implementation('com.fasterxml.jackson.core:jackson-core:2.9.7')
-    implementation('mysql:mysql-connector-java:8.0.13')
     implementation('org.jooq:jool:0.9.14')
+    implementation('org.jooq:jool:0.9.14')
+    implementation('mysql:mysql-connector-java:8.0.13')
     implementation('com.querydsl:querydsl-core:4.2.1')
     implementation('com.querydsl:querydsl-jpa:4.2.1')
-
+    
     compileOnly "com.querydsl:querydsl-jpa:4.2.1"
     compileOnly('org.projectlombok:lombok:1.18.4')
-    
+
     annotationProcessor(
             "org.projectlombok:lombok:1.18.4",
             "com.querydsl:querydsl-apt:4.2.1:jpa",
@@ -62,10 +66,14 @@ dependencies {
     )
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('com.graphql-java-kickstart:graphql-spring-boot-starter-test:5.0.4')
     testImplementation('org.codehaus.groovy:groovy-all:2.4.7')
     testImplementation('org.spockframework:spock-core:1.2-groovy-2.4')
     testImplementation('org.spockframework:spock-spring:1.2-groovy-2.4')
-    testImplementation('com.graphql-java-kickstart:graphql-spring-boot-starter-test:5.0.4')
+}
+
+springBoot {
+    buildInfo()
 }
 
 clean {
